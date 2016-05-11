@@ -285,4 +285,8 @@ caption = _caption;
                                                         object:self];
 }
 
+-(BOOL) isVideo {
+	return self.videoURL != nil;
+}
+
 @end

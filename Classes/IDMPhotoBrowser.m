@@ -7,6 +7,8 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import "IDMPhotoBrowser.h"
 #import "IDMZoomingScrollView.h"
 
@@ -35,7 +37,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 
     // Buttons
     UIButton *_doneButton;
-
+	UIButton *_playButton;
 	// Toolbar
 	UIToolbar *_toolbar;
 	UIBarButtonItem *_previousButton, *_nextButton, *_actionButton;
@@ -44,7 +46,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 
     // Actions
     UIActionSheet *_actionsSheet;
-    UIActivityViewController *activityViewController;
+	UIActivityViewController *activityViewController;
 
     // Control
     NSTimer *_controlVisibilityTimer;
@@ -594,6 +596,18 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
               forToolbarPosition:UIToolbarPositionAny
                       barMetrics:UIBarMetricsDefault];
 
+	// Play Button
+	_playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	_playButton.frame = CGRectMake(0, 0, 100, 100);
+	_playButton.center = self.view.center;
+	[_playButton addTarget:self action:@selector(playButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+	UIImage *playImage = [UIImage imageNamed:@"IDMPhotoBrowser.bundle/images/play-rounded-button-outline.png"];
+	[_playButton setImage:playImage forState:UIControlStateNormal];
+	_playButton.contentMode = UIViewContentModeScaleAspectFit;
+	_playButton.backgroundColor = [UIColor colorWithRed:256.0 green:256.0 blue:256.0 alpha:0.3];
+	_playButton.layer.cornerRadius = 50;
+
+
     // Close Button
     _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_doneButton setFrame:[self frameForDoneButtonAtOrientation:currentOrientation]];
@@ -704,6 +718,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     _doneButton = nil;
     _previousButton = nil;
     _nextButton = nil;
+	_playButton = nil;
 
     [super viewDidUnload];
 }
@@ -747,6 +762,10 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     // Toolbar
     _toolbar.frame = [self frameForToolbarAtOrientation:currentOrientation];
 
+
+	// Play button
+	_playButton.center = self.view.center;
+
     // Done button
     _doneButton.frame = [self frameForDoneButtonAtOrientation:currentOrientation];
 
@@ -777,7 +796,7 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 
 	// Reset
 	_currentPageIndex = indexPriorToLayout;
-	_performingLayout = NO;
+_performingLayout = NO;
 
     // Super
     [super viewWillLayoutSubviews];
@@ -798,6 +817,12 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     } else {
         [_toolbar removeFromSuperview];
     }
+
+	// Play button
+	[self.view addSubview:_playButton];
+	IDMPhoto *photo = [self photoAtIndex:0];
+	_playButton.alpha = (![photo isVideo]) ? 0 : 1;
+
 
     // Close button
     if(_displayDoneButton && !self.navigationController.navigationBar)
@@ -1200,13 +1225,16 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
     for (IDMZoomingScrollView *page in _visiblePages) {
         if (page.captionView) [captionViews addObject:page.captionView];
     }
+	IDMPhoto *photo = [self photoAtIndex:_currentPageIndex];
 
     // Hide/show bars
     [UIView animateWithDuration:(animated ? 0.1 : 0) animations:^(void) {
         CGFloat alpha = hidden ? 0 : 1;
+		CGFloat playButtonAlpha = (hidden || ![photo isVideo]) ? 0 : 1;
         [self.navigationController.navigationBar setAlpha:alpha];
         [_toolbar setAlpha:alpha];
         [_doneButton setAlpha:alpha];
+		[_playButton setAlpha:playButtonAlpha];
         for (UIView *v in captionViews) v.alpha = alpha;
     } completion:^(BOOL finished) {}];
 
@@ -1257,6 +1285,21 @@ NSLocalizedStringFromTableInBundle((key), nil, [NSBundle bundleWithPath:[[NSBund
 }
 
 #pragma mark - Buttons
+
+- (void) playButtonPressed {
+	NSLog(@"Hi");
+	IDMPhoto *photo = [self photoAtIndex:_currentPageIndex];
+	if(photo.videoURL) {
+		AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
+		playerViewController.player = [[AVPlayer alloc] initWithURL: photo.videoURL];
+		[self presentViewController:playerViewController animated:true completion:^{
+
+			[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: nil];
+			[[AVAudioSession sharedInstance] setActive:true error:nil];
+			[playerViewController.player play];
+		}];
+	}
+}
 
 - (void)doneButtonPressed:(id)sender {
 

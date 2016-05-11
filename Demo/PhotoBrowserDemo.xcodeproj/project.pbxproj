@@ -24,6 +24,8 @@
 		4C6F97DA14AF760500F8389A /* photo4m.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F97D214AF760500F8389A /* photo4m.jpg */; };
 		727988B1187B3B5400966C66 /* IDMPBLocalizations.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 727988B0187B3B5400966C66 /* IDMPBLocalizations.bundle */; };
 		727988B7187B3CF100966C66 /* IDMPhotoBrowser.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 727988B6187B3CF100966C66 /* IDMPhotoBrowser.podspec */; };
+		922CE2A71CE38F55001D5259 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922CE2A51CE38F55001D5259 /* AVFoundation.framework */; };
+		922CE2A81CE38F55001D5259 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922CE2A61CE38F55001D5259 /* AVKit.framework */; };
 		BDDE863029564DCEAF3437FF /* libPods-PhotoBrowserDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 48F398EC6BD549F7A2FDC451 /* libPods-PhotoBrowserDemo.a */; };
 		D114BB411A32269C00E677FE /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D114BB401A32269C00E677FE /* Launch Screen.xib */; };
 		D1574968178DB94900B0211A /* IDMCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D157494F178DB94900B0211A /* IDMCaptionView.m */; };
@@ -79,6 +81,8 @@
 		4C6F97D214AF760500F8389A /* photo4m.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = photo4m.jpg; path = Photos/photo4m.jpg; sourceTree = "<group>"; };
 		727988B0187B3B5400966C66 /* IDMPBLocalizations.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IDMPBLocalizations.bundle; sourceTree = "<group>"; };
 		727988B6187B3CF100966C66 /* IDMPhotoBrowser.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = IDMPhotoBrowser.podspec; path = ../../IDMPhotoBrowser.podspec; sourceTree = "<group>"; };
+		922CE2A51CE38F55001D5259 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		922CE2A61CE38F55001D5259 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		927DCB0B321DDC6CFC895FF5 /* Pods-PhotoBrowserDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBrowserDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoBrowserDemo/Pods-PhotoBrowserDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		A539B17F628FB7F9581056C4 /* Pods-PhotoBrowserDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBrowserDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoBrowserDemo/Pods-PhotoBrowserDemo.release.xcconfig"; sourceTree = "<group>"; };
 		D11464B61802FFC4005B7BC3 /* IDMPBConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDMPBConstants.h; sourceTree = "<group>"; };
@@ -124,6 +128,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				922CE2A71CE38F55001D5259 /* AVFoundation.framework in Frameworks */,
+				922CE2A81CE38F55001D5259 /* AVKit.framework in Frameworks */,
 				D1FA3A911805C340000FFE18 /* Security.framework in Frameworks */,
 				D1890F7217C66CA70065C101 /* ImageIO.framework in Frameworks */,
 				D1A1935D1758F42A00CE615F /* MobileCoreServices.framework in Frameworks */,
@@ -166,6 +172,8 @@
 		4C6F979014AF734900F8389A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				922CE2A51CE38F55001D5259 /* AVFoundation.framework */,
+				922CE2A61CE38F55001D5259 /* AVKit.framework */,
 				48F398EC6BD549F7A2FDC451 /* libPods-PhotoBrowserDemo.a */,
 				D1A193561758F37B00CE615F /* libz.1.2.5.dylib */,
 				D1A193571758F37B00CE615F /* libz.dylib */,

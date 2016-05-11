@@ -197,6 +197,11 @@
     {
         if(indexPath.row == 0) // Local Photos
         {
+			photo = [IDMPhoto photoWithURL:[NSURL URLWithString:@"http://cdn.macrumors.com/article-new/2015/09/rmbp.jpg"]];
+			photo.videoURL = [NSURL URLWithString:@"http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4"];
+			photo.caption = @"I'm a video!";
+			[photos addObject:photo];
+			
             photo = [IDMPhoto photoWithFilePath:[[NSBundle mainBundle] pathForResource:@"photo1l" ofType:@"jpg"]];
             photo.caption = @"Grotto of the Madonna";
 			[photos addObject:photo];
@@ -212,6 +217,8 @@
             photo = [IDMPhoto photoWithFilePath:[[NSBundle mainBundle] pathForResource:@"photo4l" ofType:@"jpg"]];
             photo.caption = @"Campervan";
 			[photos addObject:photo];
+
+
         }
         else if(indexPath.row == 1 || indexPath.row == 2) // Photos from Flickr or Flickr - Custom
         {
