@@ -1161,6 +1161,9 @@ _performingLayout = NO;
 
         if(_arrowButtonsChangePhotosAnimated) [self updateToolbar];
     }
+
+	IDMPhoto *photo = [self photoAtIndex:_currentPageIndex];
+	_playButton.alpha = (![photo isVideo]) ? 0 : 1;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -1287,7 +1290,6 @@ _performingLayout = NO;
 #pragma mark - Buttons
 
 - (void) playButtonPressed {
-	NSLog(@"Hi");
 	IDMPhoto *photo = [self photoAtIndex:_currentPageIndex];
 	if(photo.videoURL) {
 		AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
@@ -1319,13 +1321,20 @@ _performingLayout = NO;
 }
 
 - (void)actionButtonPressed:(id)sender {
-    id <IDMPhoto> photo = [self photoAtIndex:_currentPageIndex];
+    IDMPhoto *photo = [self photoAtIndex:_currentPageIndex];
 
     if ([self numberOfPhotos] > 0 && [photo underlyingImage]) {
         if(!_actionButtonTitles)
         {
             // Activity view
-            NSMutableArray *activityItems = [NSMutableArray arrayWithObject:[photo underlyingImage]];
+			NSMutableArray *activityItems;
+			if([photo isVideo]) {
+				activityItems = [NSMutableArray arrayWithObject: photo.videoURL];
+			}
+			else{
+				activityItems = [NSMutableArray arrayWithObject:[photo underlyingImage]];
+			}
+
             if (photo.caption) [activityItems addObject:photo.caption];
 
             self.activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
